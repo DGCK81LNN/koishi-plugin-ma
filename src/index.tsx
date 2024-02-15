@@ -59,7 +59,6 @@ export function apply(ctx: Context, config: Config) {
   //const logger = ctx.logger("ma")
 
   const cmd = ctx.command("ma <program:text>", {
-    checkArgCount: true,
     checkUnknown: true,
     showWarning: true,
   })
@@ -92,17 +91,20 @@ export function apply(ctx: Context, config: Config) {
       )
 
     //logger.debug(require("node:util").inspect(dom.toString(), !1, 5, !0))
+    if (iterations.length === 1) {
+      return session.text(".no-operation")
+    }
 
     await session.send(
       <html
         style={{
-          fontFamily: config.fontFamily,
-          maxWidth: config.maxWidth,
-          backgroundColor: config.backColor,
-          color: config.foreColor,
+          "fontFamily": config.fontFamily,
+          "maxWidth": config.maxWidth,
+          "backgroundColor": config.backColor,
+          "color": config.foreColor,
           "--bg": config.codeBackColor,
           "--fg": config.codeForeColor,
-          padding: "0.5em",
+          "padding": "0.5em",
         }}
       >
         <style>{

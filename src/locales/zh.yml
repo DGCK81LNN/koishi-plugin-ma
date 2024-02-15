@@ -14,5 +14,6 @@ commands:
           str：该规则其余部分为程序操作的初始字符串。程序不可包含多于一个 str 语句。若无 str 语句，初始字符串为空。
       使用反斜杠（“\”）转义具有特殊含义的字符，或使用“\n”表示换行。
     messages:
+      no-operation: 该程序什么也没有做。
       empty-result: 结果为空。
       iterations-ellipsized: ……（{0} 步）……
