@@ -52,8 +52,8 @@ export default function* run(
 ) {
   const maxRules = options?.maxRules ?? 1000
   const maxMetaRules = options?.maxMetaRules ?? 100
-  const maxIterations = options?.maxIterations ?? 10000
-  const maxStringSize = options?.maxStringSize ?? 1000
+  const maxIterations = options?.maxIterations ?? 100000
+  const maxStringSize = options?.maxStringSize ?? 100000
 
   const lines: string[] = []
   {
@@ -128,12 +128,12 @@ export default function* run(
       let ka = list(k, "%").map(unescape)
       let va = list(v, "%").map(unescape)
       return [
-        new RegExp(ka.map(escapeRe).join(kw === "chr" ? "([1-9]\\d*)" : "(.)"), "su"),
+        new RegExp(ka.map(escapeRe).join(kw === "chr" ? "([1-9]\\d*)" : "(.)"), "s"),
         (_: string, ...groups: string[]) =>
           va.reduce((a, c, i) => {
             let group = groups[Math.min(ka.length - 1, i) - 1] ?? "%"
-            if (kw === "chr") group = String.fromCodePoint(parseInt(group))
-            else if (kw === "ord") group = String(group.codePointAt(0))
+            if (kw === "chr") group = String.fromCharCode(parseInt(group))
+            else if (kw === "ord") group = String(group.charCodeAt(0))
             return a + group + c
           }),
         kw === "fin",
@@ -141,7 +141,7 @@ export default function* run(
     })
 
   yield str
-  outer: for (let i = 0; i < maxIterations; i++) {
+  outer: for (let i = 1; i < maxIterations; i++) {
     for (const [re, rp, fin] of rules) {
       if (re.test(str)) {
         str = str.replace(re, rp)

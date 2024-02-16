@@ -13,7 +13,10 @@ commands:
           fin：该规则执行后，停止程序运行。
           str：该规则其余部分为程序操作的初始字符串。程序不可包含多于一个 str 语句。若无 str 语句，初始字符串为空。
       使用反斜杠（“\”）转义具有特殊含义的字符，或使用“\n”表示换行。
+    options:
+      image: 显示图片（默认开启，使用 --no-image 或简写 -M 关闭）
     messages:
       no-operation: 该程序什么也没有做。
       empty-result: 结果为空。
+      result-too-long: 结果过长。
       iterations-ellipsized: ……（{0} 步）……
