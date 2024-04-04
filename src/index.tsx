@@ -2,7 +2,6 @@ import type {} from "@koishijs/plugin-help"
 import { Context, Schema, Session, h } from "koishi"
 import assert from "node:assert"
 import run from "./interpreter"
-import { tryRestoreRawText } from "./utils"
 
 export const name = "ma"
 export const inject = ["component:html"]
@@ -187,14 +186,13 @@ export function apply(ctx: Context, config: Config) {
   }
 
   const cmd = ctx
-    .command("ma <program:text>", {
+    .command("ma <program:rawtext>", {
       checkUnknown: true,
       showWarning: true,
     })
-    .option("image", "<image:boolean>", { fallback: true })
+    .option("image", "", { fallback: true })
     .option("image", "-M", { value: false, hidden: true })
-  cmd.action(async ({ options, session, source, initiator }, text) => {
-    if (source) text = tryRestoreRawText(text, source, true) || text
+  cmd.action(async ({ options, session, initiator }, text) => {
     const interpolated = initiator === "$("
 
     //logger.debug(require("node:util").inspect(dom.toString(), !1, 5, !0))
