@@ -2,6 +2,7 @@ import type {} from "@koishijs/plugin-help"
 import { Context, Schema, Session, h } from "koishi"
 import assert from "node:assert"
 import run from "./interpreter"
+import * as auxCommands from "./aux_commands"
 
 export const name = "ma"
 export const inject = ["component:html"]
@@ -22,6 +23,7 @@ export interface Config {
   foreColor: string
   codeBackColor: string
   codeForeColor: string
+  auxCommands: auxCommands.Config
 }
 
 export const Config: Schema<Config> = Schema.object({
@@ -56,6 +58,7 @@ export const Config: Schema<Config> = Schema.object({
   foreColor: Schema.string().default("#999").description("次要文字颜色。"),
   codeBackColor: Schema.string().default("#222").description("主要文字底色。"),
   codeForeColor: Schema.string().default("#eee").description("主要文字颜色。"),
+  auxCommands: auxCommands.Config.description("辅助指令设置"),
 })
 
 function renderIterations(iterations: string[]) {
@@ -70,6 +73,8 @@ export function apply(ctx: Context, config: Config) {
   ctx.i18n.define("zh", require("./locales/zh"))
 
   //const logger = ctx.logger("ma")
+
+  ctx.plugin(auxCommands, config.auxCommands)
 
   async function process(
     session: Session,
