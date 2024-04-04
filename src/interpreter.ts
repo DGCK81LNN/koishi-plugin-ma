@@ -1,5 +1,11 @@
 const escapes = Object.create(null)
-escapes.n = "\n"
+Object.assign(escapes, {
+  n: "\n",
+  r: "\r",
+  t: "\t",
+  " ": " ",
+  "\t": "\t",
+})
 
 function parseKv(line: string) {
   for (let i = 0, l = line.length; i < l; i++) {
@@ -63,7 +69,7 @@ export default function* run(
         i++
         continue
       }
-      if (source[i] === ";" || source[i] === "\n") {
+      if ([";", "\n", "\r"].includes(source[i])) {
         lines.push(source.slice(splitIndex, i))
         splitIndex = i + 1
       }
