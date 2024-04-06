@@ -100,7 +100,7 @@ export function apply(ctx: Context, config: Config) {
         let message = ""
         if (url) {
           try {
-            message = await ctx.http.get(url, { responseType: "text" })
+            message = h.escape(await ctx.http.get(url, { responseType: "text" }))
           } catch (err) {
             await session.send(err?.message || String(err))
             logger.info(err)
