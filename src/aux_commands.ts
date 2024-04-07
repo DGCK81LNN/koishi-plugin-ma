@@ -49,9 +49,14 @@ function transform(
             .replace(/\t/g, "\\t")
         ),
     })
-  if (ord) return [...message].map(c => `&amp;#${c.codePointAt(0)};`).join("")
+  if (ord)
+    return h.transform(message, {
+      text: ({ content: c }) => h.text(`&amp;#${c.codePointAt(0)};`),
+    })
   if (hexOrd)
-    return [...message].map(c => `&amp;#x${c.codePointAt(0).toString(16)};`).join("")
+    return h.transform(message, {
+      text: ({ content: c }) => h.text(`&amp;#x${c.codePointAt(0).toString(16)}};`),
+    })
   return message
 }
 
