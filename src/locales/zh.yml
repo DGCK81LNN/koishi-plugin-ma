@@ -21,7 +21,7 @@ commands:
       result-too-long: 结果过长。
       iterations-ellipsized: ……（{0} 步）……
   echo:
-    description: 输出给定字符串
+    description: 输出给定内容
     options: &echoopt
       escape: XML 转义输出
       unescape: XML 反转义输出
@@ -29,14 +29,25 @@ commands:
       ord: XML 字符编码转义
       decOrd: XML 十进制字符编码转义
       hexOrd: XML 十六进制字符编码转义
-    messages: &echomsg
+    messages:
+      expect-content: 缺少消息内容。
       conflicting-options: 选项冲突。
   cat:
     description: 重复下一条消息，或从 URL 获取文本
     options:
       <<: *echoopt
     messages:
-      <<: *echomsg
+      conflicting-options: 选项冲突。
       fetch-content-too-long: 内容过长。
       awaiting-input: 请发送内容…
       no-content: 无内容可发送。
+  send:
+    description: 发送消息到指定上下文
+    options:
+      user: 发送到用户
+      channel: 发送到频道
+      guild: 指定群组编号
+    messages:
+      expect-content: 缺少消息内容。
+      expect-context: 请提供新的上下文。
+      platform-not-found: 找不到指定的平台。
