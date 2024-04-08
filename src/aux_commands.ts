@@ -51,11 +51,12 @@ function transform(
     })
   if (ord)
     return h.transform(message, {
-      text: ({ content: c }) => h.text(`&amp;#${c.codePointAt(0)};`),
+      text: ({ content: c }) => [...c].map(c => `&#${c.codePointAt(0)};`).join(""),
     })
   if (hexOrd)
     return h.transform(message, {
-      text: ({ content: c }) => h.text(`&amp;#x${c.codePointAt(0).toString(16)}};`),
+      text: ({ content: c }) =>
+        [...c].map(c => `&#x${c.codePointAt(0).toString(16)};`).join(""),
     })
   return message
 }
