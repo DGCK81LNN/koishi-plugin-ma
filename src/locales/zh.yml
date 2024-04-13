@@ -49,5 +49,4 @@ commands:
       guild: 指定群组编号
     messages:
       expect-content: 缺少消息内容。
-      expect-context: 请提供新的上下文。
       platform-not-found: 找不到指定的平台。

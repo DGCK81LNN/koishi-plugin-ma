@@ -160,7 +160,7 @@ export function apply(ctx: Context, config: Config) {
           message = await session.prompt()
         }
         if (!message) {
-          await session.send(session.text(".no-text"))
+          await session.send(session.text(".no-content"))
           return
         }
         return transform(message, options)
@@ -172,13 +172,18 @@ export function apply(ctx: Context, config: Config) {
       .command("send <message:el>", {
         checkUnknown: true,
         showWarning: true,
+      })
+      .option("user", "-u <user:user>", {
         authority: 3,
       })
-      .option("user", "-u <user:user>")
-      .option("channel", "-c <channel:channel>")
-      .option("guild", "-g <guild:string>")
+      .option("channel", "-c <channel:channel>", {
+        authority: 3,
+      })
+      .option("guild", "-g <guild:string>", {
+        authority: 3,
+      })
       .action(async ({ session, options }, content) => {
-        if (!content?.length) return session.send(session.text(".expect-content"))
+        if (!content?.length) return session.text(".expect-content")
 
         // https://github.com/koishijs/koishi/blob/e83e6bd1aabb85e8e415d5eefc0f959d4a4d82fb/plugins/common/echo/src/index.ts#L36-L48
         const target = options.user || options.channel
@@ -195,7 +200,7 @@ export function apply(ctx: Context, config: Config) {
           return
         }
 
-        return session.text(".expect-context")
+        await session.send(content)
       })
   }
 }
