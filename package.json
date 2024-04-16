@@ -9,6 +9,11 @@
     "dist"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/DGCK81LNN/koishi-plugin-ma",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DGCK81LNN/koishi-plugin-ma.git"
+  },
   "keywords": [
     "chatbot",
     "koishi",
